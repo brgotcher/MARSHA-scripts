@@ -1,0 +1,120 @@
+
+var bzhao;
+
+function Main() {
+
+  bzhao = new ActiveXObject( "BZWhll.WhllObj" );
+  bzhao.Connect( "" );
+	//in newResCommand:
+		//replace XXX with block code
+		//replace ZZZZ with rate code (block code + one-letter room designation)
+		//replace DDMMM with date, add two digit year if needed
+		//replace N with number of nights
+	var newResCommand = "0*XXXnn1ZZZZDDMMM/N";
+	
+	
+	//FILL THIS LIST WITH NAMES FROM ROOMING LIST 
+	//Format: "Firstname/Lastname",   comma after each, outside quotes, except last
+	var roomList = [
+				"Guy/Manderson",
+				"Guesty/McGuestface",
+				"Testy/Testington"
+				];
+
+	//save and quit and don't touch anything below this line
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+	
+	var listLength = roomList.length;
+
+
+  
+
+	var i;
+	for (i = 0; i < listLength; i++) {
+		//split name into first and last name:
+		var slashPos = roomList[i].indexOf("/");
+		var firstName = roomList[i].slice(0, slashPos);
+		var lastName = roomList[i].slice(slashPos, roomList[i].length);
+
+		//enter command to start new res:
+		bzhao.SendKey( newResCommand );
+ 		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+		//Enter name command:
+		bzhao.SendKey( "n1" + lastName + "/" + firstName);
+		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		//enter and complete address screen
+		bzhao.SendKey ( "ah/us" );
+		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey (firstName + " " + lastName);
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "1200 N Walker" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "Oklahoma City" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "OK" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+
+
+		bzhao.SendKey ( "73103" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "save" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "'r" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "'r" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+
+		//enter (our) phone number, confirm reservation, close
+		bzhao.SendKey ( "p4056006200c" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "frg" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "0ga/pr" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "en" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+		bzhao.SendKey ( "j" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.25 );
+		bzhao.SendKey ( "j" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.25 );
+
+	
+	}//end for loop
+
+
+}//end main method
+
+Main();
