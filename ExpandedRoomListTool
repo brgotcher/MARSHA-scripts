@@ -1,0 +1,170 @@
+
+var bzhao;
+
+function Main() {
+
+  bzhao = new ActiveXObject( "BZWhll.WhllObj" );
+  bzhao.Connect( "" );
+
+
+	
+	
+	//FILL roomList WITH NAMES FROM ROOMING LIST along with room type, arrival date and number of nights 
+  //CAN ADD MORE ENTRIES OR DELETE AS NEEDED, JUST GET QUOTES AND COMMAS RIGHT
+	//Format: "Firstname/Lastname/roomtype/arrival date(ddmmm)/#nights",   
+		//comma after each outside quotes, except last
+		//example: "John/Smith/genr/11Jan/3",
+	var roomList = [
+				"Guy/Manderson/GENR/21FEB/3",
+				"Guesty/McGuestface/GENR/23FEB/1",
+				"Testy/Testington/GENR/22FEB/2"
+				];
+	//enter 3-character block code in place of xxx- keep quotation marks
+	var block = "zzz";
+
+	//save and quit and don't touch anything below this line
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+	
+	var listLength = roomList.length;
+
+
+  
+
+	var i;
+	for (i = 0; i < listLength; i++) {
+		//find index of first slash
+		var slashPos = roomList[i].indexOf("/");
+		//firstName is from beginning of string to first slash
+		var firstName = roomList[i].slice(0, slashPos);
+		//remaining is the next index after the first slash to end of string
+		var remaining = roomList[i].slice(slashPos + 1, roomList[i].length);
+		//find index of second slash
+		slashPos = remaining.indexOf("/");
+		//lastName is from beginning of "remaining" to the second slash
+		var lastName = remaining.slice(0, slashPos);
+		//"remaining" changes to second slash to end of string
+		remaining = remaining.slice(slashPos + 1, remaining.length);
+		//slashPos moves to third space
+		slashPos = remaining.indexOf("/");
+		//roomType is from beginning of remaining to third slash
+		var roomType = remaining.slice(0, slashPos);
+		//remaining changes to start at third slash
+		remaining = remaining.slice(slashPos + 1, remaining.length);
+		//slashPos moves to fourth slash
+		slashPos = remaining.indexOf("/");
+		//date is from beginning of remaining to fourth slash
+		var date = remaining.slice(0, slashPos);
+		//nights is from fourth slash to end of string
+		var nights = remaining.slice(slashPos + 1, remaining.length);
+		//set roomType to all lower case to avoid case issues
+		roomType = roomType.toLowerCase();
+		
+		var rateCode = "x";
+		switch(roomType) {
+
+			case "genr": 
+				rateCode = block + "a"; 
+				break;
+			case "quen":
+				rateCode = block + "b";
+				break;
+			case "ekng":
+				rateCode = block + "c";
+				break;
+			case "cnkg":
+				rateCode = block + "d";
+				break;
+			case "dlux":
+				rateCode = block + "e";
+				break;
+			case "suit":
+				rateCode = block + "f";
+				break;
+		}//end switch statement
+				
+		
+		var newResCommand = "0*" + block + "nn1" +  rateCode + date + "/" + nights;
+		
+
+		//enter command to start new res:
+		bzhao.SendKey( newResCommand );
+ 		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+		//Enter name command:
+		bzhao.SendKey( "n1" + lastName + "/" + firstName);
+		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		//enter and complete address screen
+		bzhao.SendKey ( "ah/us" );
+		bzhao.SendKey( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey (firstName + " " + lastName);
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "1200 N Walker" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "Oklahoma City" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "OK" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+
+
+		bzhao.SendKey ( "73103" );
+		bzhao.SendKey ( "<Tab>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "save" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "'r" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "'r" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.2 );
+
+
+		//enter (our) phone number, confirm reservation, close
+		bzhao.SendKey ( "p4056006200c" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "frg" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "0ga/pr" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "en" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+		bzhao.SendKey ( "j" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+		bzhao.SendKey ( "j" );
+		bzhao.SendKey ( "<Enter>" );
+ 		bzhao.Wait( 0.1 );
+
+	
+	}//end for loop
+
+
+}//end main method
+
+Main();
